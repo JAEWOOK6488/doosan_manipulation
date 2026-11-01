@@ -1,0 +1,15 @@
+{
+  "seed": 20261101,
+  "cases": 60,
+  "detected": 60,
+  "missed": 0,
+  "alarm_before_cases": 0,
+  "reference_alarm_cases": 0,
+  "false_alarm_cases": 0,
+  "diverged_cases": 0,
+  "delay_ms_median": 22.565391135240308,
+  "delay_ms_max": 93.81041366234611,
+  "rms_mm_max": 7.501129938082759,
+  "max_error_mm": 26.52524425062044,
+  "misses": []
+}

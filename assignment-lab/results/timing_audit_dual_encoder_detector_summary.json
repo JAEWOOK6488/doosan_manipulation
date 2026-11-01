@@ -1,0 +1,37 @@
+{
+  "cases": 96,
+  "detected": 91,
+  "missed": 5,
+  "alarm_before": 0,
+  "reference_alarm_cases": 0,
+  "false_alarm_cases": 0,
+  "delay_ms_median": 53.000000000000384,
+  "delay_ms_max": 128.0000000000001,
+  "misses": [
+    {
+      "phase": "grasp",
+      "collision_time_s": 1.38,
+      "direction": "+X"
+    },
+    {
+      "phase": "grasp",
+      "collision_time_s": 1.4,
+      "direction": "-Z"
+    },
+    {
+      "phase": "grasp",
+      "collision_time_s": 1.42,
+      "direction": "-Z"
+    },
+    {
+      "phase": "release",
+      "collision_time_s": 3.8,
+      "direction": "-Y"
+    },
+    {
+      "phase": "release",
+      "collision_time_s": 3.8,
+      "direction": "+Z"
+    }
+  ]
+}

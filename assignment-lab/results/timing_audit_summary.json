@@ -1,0 +1,11 @@
+{
+  "cases": 96,
+  "detected": 96,
+  "missed": 0,
+  "alarm_before": 0,
+  "reference_alarm_cases": 0,
+  "false_alarm_cases": 0,
+  "delay_ms_median": 49.00000000000004,
+  "delay_ms_max": 180.00000000000017,
+  "misses": []
+}

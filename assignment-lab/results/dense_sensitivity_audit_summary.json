@@ -1,0 +1,14 @@
+{
+  "force_N": 15.0,
+  "mass_kg": 8.0,
+  "time_step_s": 0.1,
+  "cases": 348,
+  "detected": 348,
+  "missed": 0,
+  "alarm_before_cases": 0,
+  "reference_alarm_cases": 0,
+  "false_alarm_cases": 0,
+  "delay_ms_median": 32.00000000000003,
+  "delay_ms_max": 138.0000000000001,
+  "misses": []
+}

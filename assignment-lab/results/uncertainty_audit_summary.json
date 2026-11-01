@@ -1,0 +1,15 @@
+{
+  "scenarios": 16,
+  "cases": 64,
+  "nominal_false_alarm_scenarios": 0,
+  "nominal_diverged_scenarios": 0,
+  "collision_cases": 48,
+  "collision_detected": 48,
+  "collision_missed": 0,
+  "collision_alarm_before": 0,
+  "collision_reference_alarm_cases": 0,
+  "collision_false_alarm_cases": 0,
+  "max_delay_ms": 100.00000000000009,
+  "max_rms_mm": 6.292354363982969,
+  "max_error_mm": 14.653509677608604
+}

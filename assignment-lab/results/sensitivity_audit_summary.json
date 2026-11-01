@@ -1,0 +1,80 @@
+{
+  "mass_kg": 8.0,
+  "groups": {
+    "10N": {
+      "cases": 72,
+      "detected": 59,
+      "missed": 13,
+      "alarm_before_cases": 0,
+      "reference_alarm_cases": 0,
+      "false_alarm_cases": 3,
+      "delay_ms_median": 42.0000000000007,
+      "delay_ms_max": 113.00000000000021,
+      "misses": [
+        {
+          "time_s": 0.1,
+          "direction": "+X"
+        },
+        {
+          "time_s": 0.1,
+          "direction": "-X"
+        },
+        {
+          "time_s": 0.5,
+          "direction": "+X"
+        },
+        {
+          "time_s": 0.5,
+          "direction": "-X"
+        },
+        {
+          "time_s": 0.9,
+          "direction": "+X"
+        },
+        {
+          "time_s": 1.42,
+          "direction": "-X"
+        },
+        {
+          "time_s": 1.42,
+          "direction": "+Y"
+        },
+        {
+          "time_s": 1.42,
+          "direction": "-Z"
+        },
+        {
+          "time_s": 2.0,
+          "direction": "+Y"
+        },
+        {
+          "time_s": 3.7,
+          "direction": "+Z"
+        },
+        {
+          "time_s": 3.86,
+          "direction": "+Y"
+        },
+        {
+          "time_s": 4.8,
+          "direction": "-X"
+        },
+        {
+          "time_s": 5.5,
+          "direction": "-X"
+        }
+      ]
+    },
+    "15N": {
+      "cases": 72,
+      "detected": 72,
+      "missed": 0,
+      "alarm_before_cases": 0,
+      "reference_alarm_cases": 0,
+      "false_alarm_cases": 0,
+      "delay_ms_median": 34.99999999999992,
+      "delay_ms_max": 93.0000000000002,
+      "misses": []
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "cases": 88,
+  "nominal_cases": 16,
+  "nominal_false_alarm_cases": 0,
+  "nominal_diverged_cases": 0,
+  "nominal_rms_mm_max": 5.866076266389935,
+  "nominal_max_mm_max": 11.789673204526702,
+  "collision_cases": 72,
+  "collision_detected": 72,
+  "collision_missed": 0,
+  "collision_alarm_before": 0,
+  "collision_reference_alarm_cases": 0,
+  "collision_false_alarm_cases": 0,
+  "delay_ms_median": 27.000000000000135,
+  "delay_ms_max": 93.0000000000002
+}

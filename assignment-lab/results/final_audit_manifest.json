@@ -1,0 +1,128 @@
+{
+  "generated_at_utc": "2026-11-01T01:10:48.024541+00:00",
+  "environment": {
+    "python": "3.12.14",
+    "mujoco": "3.17.0",
+    "numpy": "2.5.4"
+  },
+  "submission_zip_sha256": "c10d7d6fddb752d4598d35d36d5e757163eb86bef4b708f0fdc142081f5b64d5",
+  "original_sim_checksums_sha256": "f15a44ec33579e07665b9c27b8dce3bbe68c22f175bd4aa95918f1bc35b33832",
+  "original_model_checksums_sha256": "be4fdfbbd34f4b18bd172ba6123a3a83fcc52c5e38eaea3a27ffd0b30c9e9636",
+  "source_sha256": {
+    "servo_controller.py": "7a83548a8ff078fc93518ca25492c054742e0624f70ae00de0465356ed87affc",
+    "collision_detector.py": "432c041241291ad32753cafb6afc4664cb4f0bddcc24ee3701bf10d708746d82",
+    "README_SUBMISSION.md": "fc912a9b471bb0c4004c041cb196a733c8f6f828f866441e3dbe823d0a9d7816",
+    "scheduled_servo.py": "a0a9b9ce51e7c88d679471540b88ecc2b7d39c69042da0af19d9f373f5004d7d",
+    "hover_servo.py": "6b7a7aa38e41c68b49559ddeedd6445df4e97a29f5c6a98ca8cfe29786a4df8e",
+    "hybrid_detector.py": "9586905338d6ea3b7716aa935c5931f84919a535336095365cd33ba5ab6777cd"
+  },
+  "result_sha256": {
+    "timing_audit_summary.json": "948e4b1b7dec40f28c96c4562142345eafaf8e03a955d2e1f67a1f4cd192d05f",
+    "robustness_summary.json": "a28fd52e77219e1e950f737214d813ffbdefe49692cd246e973b9e16a9c65568",
+    "uncertainty_audit_summary.json": "8f0dda0a0faf3ad5178de015e7a171bf4831f35f772d7cf5466eb90d572f6a82",
+    "hover_height_sweep.json": "e6648f3653eafe4fbac8179e6fb31af8c0816a596f310c5770ad9a52dd3c3795",
+    "motor_jts_gap_study.json": "bcee61e9ffd8add421774e0f7f732b8fb22e822730cfec8828dc01ce47db1f8e",
+    "monte_carlo_audit_summary.json": "926c2563fcdd0746cb725e792a44980837bc1a162b3c44ecb2659478157c2051",
+    "startup_audit_summary.json": "afad9073b5909cd9f9635804d721a02e3488a068f3576f9a3c23302917f55329",
+    "sensitivity_audit_summary.json": "9606ddb28d8970c336bdd8a0fba57205ef7405d43575559604d6e0fff9cd211e",
+    "dense_sensitivity_audit_summary.json": "03bc9e4dbd4b4fef5c628e8cbc4ba0a4cc8f908829ece1405840599fd7290c31",
+    "compute_benchmark.json": "03cebc4bd767bee01e7b0f97c33ac1e0d0c7e07339a4a4e739cc5f72847ab841"
+  },
+  "checks": [
+    {
+      "name": "submission checksum",
+      "passed": true,
+      "detail": "c10d7d6fddb752d4598d35d36d5e757163eb86bef4b708f0fdc142081f5b64d5"
+    },
+    {
+      "name": "submission file allow-list",
+      "passed": true,
+      "detail": "servo_controller.py, collision_detector.py, README_SUBMISSION.md, scheduled_servo.py, hover_servo.py, hybrid_detector.py"
+    },
+    {
+      "name": "reproducible ZIP metadata",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "ZIP matches reviewed sources",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "no simulator truth access in submitted Python",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "96-case transition timing audit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "transition delay bound",
+      "passed": true,
+      "detail": "max=180.00000000000017 ms"
+    },
+    {
+      "name": "48-case startup/calibration audit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "72-case whole-cycle 15 N sensitivity audit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "348-case dense 15 N sensitivity audit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "controller and detector p99 below 1 ms",
+      "passed": true,
+      "detail": "controller=40.9 us, detector=71.4 us"
+    },
+    {
+      "name": "88-case robustness audit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "sensor/model uncertainty audit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "continuous-condition Monte Carlo audit",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "unmodified simulator evaluation present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "work copy and original simulator metrics match",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "original simulator checksum record",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "original model checksum record",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Markdown local links",
+      "passed": true,
+      "detail": ""
+    }
+  ]
+}
