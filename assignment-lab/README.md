@@ -33,6 +33,15 @@ Week9 MuJoCo 과제의 작업용 사본과 개선안이다. 다운로드 폴더�
 한 명령으로 실행하려면 빠른 점검은 `.venv/bin/python reproduce.py --quick`,
 전체 결과 재생성은 `.venv/bin/python reproduce.py --full`을 사용한다.
 
+## 2차 환경 강건성 개선
+
+1차 제출안은 `../snapshots/phase1_2026-11-01/`에 고정되어 있다. 물체 형상,
+관성, 접촉재료, 작업대·흡착 강성, 놓기 높이와 센서 비이상성까지 확장한
+2차 시험은 `PHASE2_REPORT.md`에 정리했다. 실행 파일은
+`robust_detector_v2.py`, `environment_robustness_audit.py`,
+`environment_monte_carlo_v2.py`, `sensitivity_audit_v2.py`이며 결과는
+`results/phase2/`에 저장된다.
+
 충돌 성공 판정은 같은 조건의 무충돌 실행과 비교한다. 검출 시각 주변 ±20 ms에
 기준 경보가 있으면 `구분 불가`로 세며, 요약 JSON의
 `collision_reference_alarm_cases` 또는 `reference_alarm_cases`에서 확인할 수 있다.

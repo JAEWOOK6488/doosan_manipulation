@@ -40,9 +40,36 @@ class Plant:
         self.place_height_offset = float(
             uncertainty.get("place_height_offset_m", 0.0)
         )
+        size_scale = np.asarray(uncertainty.get("box_size_scale", 1.0), float)
+        if size_scale.ndim == 0:
+            size_scale = np.full(3, float(size_scale))
+        if size_scale.shape != (3,) or np.any(size_scale <= 0):
+            raise ValueError("box_size_scale must be a positive scalar or length-3 vector")
+        self.box_size = np.asarray(C.BOX_SIZE, float) * size_scale
+        self.box_inertia_scale = float(uncertainty.get("box_inertia_scale", 1.0))
+        if self.box_inertia_scale <= 0:
+            raise ValueError("box_inertia_scale must be positive")
+        self.contact_friction = np.asarray(
+            uncertainty.get("contact_friction", [1.0, 0.005, 0.0001]), float
+        )
+        if self.contact_friction.shape != (3,) or np.any(self.contact_friction < 0):
+            raise ValueError("contact_friction must be a nonnegative length-3 vector")
+        table_time_scale = float(uncertainty.get("table_time_scale", 1.0))
+        table_damping_scale = float(uncertainty.get("table_damping_scale", 1.0))
+        suction_time_scale = float(uncertainty.get("suction_time_scale", 1.0))
+        if min(table_time_scale, table_damping_scale, suction_time_scale) <= 0:
+            raise ValueError("contact and suction scales must be positive")
+        self.table_solref = [
+            C.TABLE_SOLREF[0] * table_time_scale,
+            C.TABLE_SOLREF[1] * table_damping_scale,
+        ]
+        self.suction_solref = [
+            C.SUCTION_SOLREF[0] * suction_time_scale,
+            C.SUCTION_SOLREF[1],
+        ]
         nom = Nominal()
         spec = model.build(elastic=True, spec_only=True)
-        half = np.array(C.BOX_SIZE) / 2
+        half = self.box_size / 2
         off = np.zeros(3) if pick_offset is None else np.asarray(pick_offset, float)
         for name, t in (("table_pick", T.T_GRASP), ("table_place", T.T_RELEASE)):
             p, _, R = _box_pose(nom, t)
@@ -54,7 +81,8 @@ class Plant:
             hz = (top - C.FLOOR_Z) / 2
             g = spec.worldbody.add_geom(name=name, type=mujoco.mjtGeom.mjGEOM_BOX, size=[C.TABLE_XY[0] / 2, C.TABLE_XY[1] / 2, hz],
                                         pos=[p[0], p[1], top - hz], rgba=[.55, .5, .45, 1])
-            g.contype, g.conaffinity, g.solref, g.solimp = 2, 2, C.TABLE_SOLREF, C.TABLE_SOLIMP
+            g.contype, g.conaffinity = 2, 2
+            g.solref, g.solimp, g.friction = self.table_solref, C.TABLE_SOLIMP, self.contact_friction
         self.has_box = box_mass > 0
         if self.has_box:
             p, q, _ = _box_pose(nom, T.T_GRASP)
@@ -63,12 +91,15 @@ class Plant:
             bx.add_freejoint(name="box_free")
             g = bx.add_geom(type=mujoco.mjtGeom.mjGEOM_BOX, size=half, density=0, rgba=[.8, .55, .25, .9])
             g.contype, g.conaffinity = 2, 2
-            a, w, h = C.BOX_SIZE
+            g.friction = self.contact_friction
+            a, w, h = self.box_size
             bx.mass, bx.ipos, bx.explicitinertial = box_mass, list(box_com), True
-            bx.inertia = box_mass / 12 * np.array([w**2 + h**2, a**2 + h**2, a**2 + w**2])
+            bx.inertia = self.box_inertia_scale * box_mass / 12 * np.array(
+                [w**2 + h**2, a**2 + h**2, a**2 + w**2]
+            )
             eq = spec.add_equality(type=mujoco.mjtEq.mjEQ_WELD, name="suction", name1="link_6", name2="box_free",
                                    objtype=mujoco.mjtObj.mjOBJ_BODY, active=False)
-            eq.solref = C.SUCTION_SOLREF
+            eq.solref = self.suction_solref
         if pick_offset is not None:                                # 툴이 박스·작업대에 부딪힐 수 있게
             tg = spec.geom("tool_geom")
             tg.contype, tg.conaffinity = 2, 2

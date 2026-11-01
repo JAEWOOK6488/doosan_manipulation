@@ -1,0 +1,72 @@
+{
+  "scenarios": 17,
+  "cases": 68,
+  "no_collision_false_alarm_scenarios": 4,
+  "no_collision_diverged_scenarios": 0,
+  "collision_cases": 51,
+  "collision_distinguished": 47,
+  "collision_missed": 4,
+  "collision_alarm_before": 2,
+  "collision_reference_alarm": 1,
+  "max_delay_ms": 87.00000000000018,
+  "max_rms_mm": 6.491947375524332,
+  "max_error_mm": 14.559540728924206,
+  "failures": [
+    {
+      "scenario": "hard_table",
+      "mass_kg": 8.0,
+      "case": "place_+Z",
+      "detected": true,
+      "distinguishable": false,
+      "delay_ms": 1.000000000000334,
+      "alarm_before": false,
+      "reference_alarm": true,
+      "false_alarms": 0,
+      "rms_mm": 6.108235639281361,
+      "max_mm": 14.08258321268882,
+      "diverged": false
+    },
+    {
+      "scenario": "place_high_2mm",
+      "mass_kg": 8.0,
+      "case": "place_+Z",
+      "detected": false,
+      "distinguishable": false,
+      "delay_ms": null,
+      "alarm_before": true,
+      "reference_alarm": false,
+      "false_alarms": 1,
+      "rms_mm": 6.109180512842735,
+      "max_mm": 14.116212406920697,
+      "diverged": false
+    },
+    {
+      "scenario": "combined_soft",
+      "mass_kg": 5.5,
+      "case": "carry_+Y",
+      "detected": false,
+      "distinguishable": false,
+      "delay_ms": null,
+      "alarm_before": false,
+      "reference_alarm": false,
+      "false_alarms": 0,
+      "rms_mm": 5.697901395402245,
+      "max_mm": 12.243748560834067,
+      "diverged": false
+    },
+    {
+      "scenario": "combined_hard",
+      "mass_kg": 7.5,
+      "case": "place_+Z",
+      "detected": false,
+      "distinguishable": false,
+      "delay_ms": null,
+      "alarm_before": true,
+      "reference_alarm": false,
+      "false_alarms": 1,
+      "rms_mm": 6.0204574553569845,
+      "max_mm": 14.559540728924206,
+      "diverged": false
+    }
+  ]
+}

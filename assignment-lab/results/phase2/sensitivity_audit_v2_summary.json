@@ -1,0 +1,113 @@
+{
+  "mass_kg": 8.0,
+  "groups": {
+    "10N": {
+      "cases": 72,
+      "detected": 53,
+      "missed": 19,
+      "alarm_before_cases": 0,
+      "reference_alarm_cases": 0,
+      "false_alarm_cases": 3,
+      "delay_ms_median": 48.00000000000004,
+      "delay_ms_max": 119.00000000000065,
+      "misses": [
+        {
+          "time_s": 0.1,
+          "direction": "+X"
+        },
+        {
+          "time_s": 0.1,
+          "direction": "-X"
+        },
+        {
+          "time_s": 0.5,
+          "direction": "+X"
+        },
+        {
+          "time_s": 0.5,
+          "direction": "-X"
+        },
+        {
+          "time_s": 0.9,
+          "direction": "+X"
+        },
+        {
+          "time_s": 1.42,
+          "direction": "-X"
+        },
+        {
+          "time_s": 1.42,
+          "direction": "+Y"
+        },
+        {
+          "time_s": 1.42,
+          "direction": "-Z"
+        },
+        {
+          "time_s": 2.0,
+          "direction": "-X"
+        },
+        {
+          "time_s": 2.0,
+          "direction": "+Y"
+        },
+        {
+          "time_s": 3.0,
+          "direction": "-X"
+        },
+        {
+          "time_s": 3.7,
+          "direction": "+Y"
+        },
+        {
+          "time_s": 3.7,
+          "direction": "-Y"
+        },
+        {
+          "time_s": 3.7,
+          "direction": "+Z"
+        },
+        {
+          "time_s": 3.7,
+          "direction": "-Z"
+        },
+        {
+          "time_s": 3.86,
+          "direction": "+Y"
+        },
+        {
+          "time_s": 4.8,
+          "direction": "-X"
+        },
+        {
+          "time_s": 5.5,
+          "direction": "-X"
+        },
+        {
+          "time_s": 5.5,
+          "direction": "+Y"
+        }
+      ]
+    },
+    "15N": {
+      "cases": 72,
+      "detected": 70,
+      "missed": 2,
+      "alarm_before_cases": 0,
+      "reference_alarm_cases": 0,
+      "false_alarm_cases": 0,
+      "delay_ms_median": 39.00000000000014,
+      "delay_ms_max": 93.0000000000002,
+      "misses": [
+        {
+          "time_s": 3.7,
+          "direction": "+Z"
+        },
+        {
+          "time_s": 3.7,
+          "direction": "-Z"
+        }
+      ]
+    }
+  }
+}

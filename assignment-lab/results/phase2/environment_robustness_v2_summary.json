@@ -1,0 +1,17 @@
+{
+  "scenarios": 17,
+  "cases": 68,
+  "controller": "hover_servo",
+  "detector": "robust_detector_v2",
+  "no_collision_false_alarm_scenarios": 0,
+  "no_collision_diverged_scenarios": 0,
+  "collision_cases": 51,
+  "collision_distinguished": 51,
+  "collision_missed": 0,
+  "collision_alarm_before": 0,
+  "collision_reference_alarm": 0,
+  "max_delay_ms": 90.0000000000003,
+  "max_rms_mm": 6.491947375524332,
+  "max_error_mm": 14.559540728924206,
+  "failures": []
+}
