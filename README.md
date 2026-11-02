@@ -4,7 +4,9 @@ Doosan M1013의 물체 이송 충격과 충돌 오경보를 줄이는 MuJoCo 기
 프로젝트다. 1차 결과와 물체 형상·관성·접촉 환경까지 확장한 2차 강건성 결과를
 함께 보존한다.
 
-## 다른 컴퓨터에서 시작
+## Quick Start
+
+다른 컴퓨터에서 저장소를 복제하고 가상환경을 만든 뒤 2차 결과를 검증한다.
 
 ```bash
 git clone https://github.com/JAEWOOK6488/doosan_manipulation.git
