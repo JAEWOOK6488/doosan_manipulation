@@ -79,6 +79,32 @@
 
 ![미지 payload 1차·2차 비교](results/unknown_payload/phase1_vs_unknown_phase2.png)
 
+## 질량·COM을 알 때와 모를 때의 직접 비교
+
+서로 다른 시험의 94.1%와 51.5%를 단순히 빼지 않고, 같은 난수로 만든 정확히
+동일한 1,000조건을 2차 시스템에 각각 입력했다. 아는 조건은 실제 질량·COM으로
+payload 모델을 만들고, 모르는 조건은 JTS만으로 온라인 추정했다. 따라서 아래
+수치는 검출기 입력만의 차이가 아니라 제어와 검출을 포함한 **시스템 수준에서
+payload 정보를 미리 아는 가치**를 나타낸다.
+
+| 동일 1,000조건 | 질량·COM 앎 | 질량·COM 모름 | 차이 |
+|---|---:|---:|---:|
+| 전체 충돌 구분 | 896/1000 (**89.6%**) | 515/1000 (**51.5%**) | **+38.1%p** |
+| 시작·접근 | 99.3% | 99.3% | 0.0%p |
+| 집기 천이 | 89.0% | 18.5% | +70.5%p |
+| 운반 | 90.0% | 58.8% | +31.2%p |
+| 놓기 천이 | 85.0% | 31.3% | +53.7%p |
+| 복귀 | 89.0% | 88.0% | +1.0%p |
+| 무충돌 경보 조건 | 91/1000 | 90/1000 | +1조건 |
+
+아는 조건만 성공한 사례는 402개, 모르는 조건만 성공한 사례는 21개였다. 전체
+차이는 무충돌 경보 횟수보다 집기·놓기 때 정상 payload 천이와 실제 충돌을
+구별하는 능력에서 발생했다. 질량·COM을 알면 집는 순간부터 정상 중력 토크의
+크기와 방향을 계산할 수 있지만, 모르면 같은 JTS 변화를 물체 취득인지 충돌인지
+식별해야 한다.
+
+![2차 payload 정보 유무 비교](results/unknown_payload/phase2_known_vs_unknown.png)
+
 ## 결론
 
 질량 자체는 JTS로 비교적 잘 추정했지만, 그 사실만으로 충돌 검출 강건성이
@@ -108,3 +134,10 @@
 - 요약: `results/unknown_payload/summary.json`
 - 공정 비교 원자료: `results/unknown_payload/phase1_vs_unknown_phase2_1000.csv`
 - 공정 비교 요약: `results/unknown_payload/phase1_vs_unknown_phase2_summary.json`
+- 정보 유무 비교 원자료: `results/unknown_payload/phase2_known_vs_unknown_1000.csv`
+- 정보 유무 비교 요약: `results/unknown_payload/phase2_known_vs_unknown_summary.json`
+
+```bash
+.venv/bin/python compare_known_unknown_phase2.py --cases 1000 --workers 8
+.venv/bin/python plot_known_unknown_phase2.py
+```

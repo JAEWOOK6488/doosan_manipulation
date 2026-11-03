@@ -1,0 +1,39 @@
+{
+  "cases": 1000,
+  "known_success": 896,
+  "known_pct": 89.6,
+  "unknown_success": 515,
+  "unknown_pct": 51.5,
+  "knowledge_gain_percentage_points": 38.1,
+  "known_only_success": 402,
+  "unknown_only_success": 21,
+  "known_reference_false_alarm_cases": 91,
+  "unknown_reference_false_alarm_cases": 90,
+  "by_phase": {
+    "startup_or_approach": {
+      "cases": 150,
+      "known_pct": 99.33333333333333,
+      "unknown_pct": 99.33333333333333
+    },
+    "pickup_transition": {
+      "cases": 200,
+      "known_pct": 89.0,
+      "unknown_pct": 18.5
+    },
+    "carry": {
+      "cases": 250,
+      "known_pct": 90.0,
+      "unknown_pct": 58.8
+    },
+    "place_transition": {
+      "cases": 300,
+      "known_pct": 85.0,
+      "unknown_pct": 31.333333333333332
+    },
+    "return": {
+      "cases": 100,
+      "known_pct": 89.0,
+      "unknown_pct": 88.0
+    }
+  }
+}

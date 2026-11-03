@@ -21,6 +21,8 @@ python3 -m venv .venv
 > 검출기에 설정한 조건이다. 두 값을 완전히 숨긴 재검증에서는 1,000회 성공률이
 > 51.5%였다. 같은 미지 조건의 1차 기준안 34.6%보다는 16.9%p 개선됐지만,
 > 현재 센서 구성만으로 미지 payload 강건성을 확보했다고 주장할 수 없다.
+> 같은 1,000조건에서 2차 시스템끼리 직접 비교하면 질량·COM을 아는 경우는
+> 89.6%, 모르는 경우는 51.5%로 **38.1%p 차이**가 났다.
 > 자세한 결과는 `assignment-lab/UNKNOWN_PAYLOAD_REPORT.md`에 있다.
 
 기본 시뮬레이션과 2차 검출기는 다음과 같이 실행한다.
@@ -35,6 +37,8 @@ python3 -m venv .venv
   --detector unknown_payload_detector --box 8 --viewer
 .venv/bin/python unknown_payload_audit.py --cases 1000 --workers 8
 .venv/bin/python compare_phase1_unknown_phase2.py --cases 1000 --workers 8
+.venv/bin/python compare_known_unknown_phase2.py --cases 1000 --workers 8
+.venv/bin/python plot_known_unknown_phase2.py
 ```
 
 ## 제출
