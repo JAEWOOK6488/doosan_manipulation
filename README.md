@@ -25,6 +25,11 @@ python3 -m venv .venv
 > 89.6%, 모르는 경우는 51.5%로 **38.1%p 차이**가 났다.
 > 자세한 결과는 `assignment-lab/UNKNOWN_PAYLOAD_REPORT.md`에 있다.
 
+이후 미지 payload를 처음부터 목표로 관측기를 다시 설계했다. 정상 실행 300개로
+시간가변 잔차 범위를 학습하고 독립 1,000조건에서 기존 미지 2차 52.8% 대비
+3차 **83.5%**를 얻었다. 상세한 데이터 분리와 한계는
+`assignment-lab/UNKNOWN_PAYLOAD_V3_REPORT.md`에 있다.
+
 기본 시뮬레이션과 2차 검출기는 다음과 같이 실행한다.
 
 ```bash
@@ -39,6 +44,12 @@ python3 -m venv .venv
 .venv/bin/python compare_phase1_unknown_phase2.py --cases 1000 --workers 8
 .venv/bin/python compare_known_unknown_phase2.py --cases 1000 --workers 8
 .venv/bin/python plot_known_unknown_phase2.py
+
+# 미지 payload 3차: 정상 프로필 학습 후 독립 holdout 비교
+.venv/bin/python train_unknown_normal_profile.py --cases 300 --seed 73129 --workers 8
+.venv/bin/python unknown_payload_holdout_audit.py --cases 1000 --seed 20261201 --workers 8
+.venv/bin/python unknown_payload_v3_audit.py --cases 1000 --seed 20261201 --workers 8
+.venv/bin/python analyze_unknown_v3.py
 ```
 
 ## 제출
@@ -64,13 +75,14 @@ python3 -m venv .venv
 5. `assignment-lab/EXTENDED_ROBUSTNESS_REPORT.md`
 6. `assignment-lab/PAIRED_1000_REPORT.md`
 7. `assignment-lab/UNKNOWN_PAYLOAD_REPORT.md`
-8. `assignment-lab/COMPLIANCE_MATRIX.md`
-9. `assignment-lab/PRESENTATION_OUTLINE.md`
-10. `assignment-lab/PRESENTATION_QA.md`
-11. `assignment-lab/PAPER_NOTES.md`
-12. `assignment-lab/SENSOR_CHANNELS.md`
-13. `assignment-lab/DEMO_SCRIPT.md`
-14. `assignment-lab/final_eval_unmodified_sim.txt`
+8. `assignment-lab/UNKNOWN_PAYLOAD_V3_REPORT.md`
+9. `assignment-lab/COMPLIANCE_MATRIX.md`
+10. `assignment-lab/PRESENTATION_OUTLINE.md`
+11. `assignment-lab/PRESENTATION_QA.md`
+12. `assignment-lab/PAPER_NOTES.md`
+13. `assignment-lab/SENSOR_CHANNELS.md`
+14. `assignment-lab/DEMO_SCRIPT.md`
+15. `assignment-lab/final_eval_unmodified_sim.txt`
 
 `assignment-lab/final_audit.py`는 ZIP 내용·체크섬·평가 요약·보고서 링크를
 검사하며 결과와 환경 버전을 `results/final_audit_manifest.json`에 기록한다.

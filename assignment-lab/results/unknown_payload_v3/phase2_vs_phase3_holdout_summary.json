@@ -1,0 +1,61 @@
+{
+  "holdout_seed": 20261201,
+  "cases": 1000,
+  "training": {
+    "normal_only_cases": 300,
+    "seed": 73129
+  },
+  "development": {
+    "cases": 100,
+    "seed": 777
+  },
+  "phase2_unknown_pct": 52.8,
+  "phase3_unknown_pct": 83.5,
+  "gain_percentage_points": 30.700000000000003,
+  "phase2_reference_false_alarm_cases": 97,
+  "phase3_reference_false_alarm_cases": 50,
+  "phase3_missed": 154,
+  "phase3_alarm_before": 11,
+  "phase2_only_success": 27,
+  "phase3_only_success": 334,
+  "by_phase": {
+    "startup_or_approach": {
+      "phase2_pct": 99.33333333333333,
+      "phase3_pct": 99.33333333333333
+    },
+    "pickup_transition": {
+      "phase2_pct": 17.5,
+      "phase3_pct": 70.0
+    },
+    "carry": {
+      "phase2_pct": 62.4,
+      "phase3_pct": 78.8
+    },
+    "place_transition": {
+      "phase2_pct": 34.0,
+      "phase3_pct": 83.66666666666667
+    },
+    "return": {
+      "phase2_pct": 86.0,
+      "phase3_pct": 98.0
+    }
+  },
+  "by_force": {
+    "15_20N": {
+      "phase2_pct": 44.0,
+      "phase3_pct": 63.2
+    },
+    "20_30N": {
+      "phase2_pct": 49.6,
+      "phase3_pct": 82.0
+    },
+    "30_45N": {
+      "phase2_pct": 58.8,
+      "phase3_pct": 92.4
+    },
+    "45_60N": {
+      "phase2_pct": 58.8,
+      "phase3_pct": 96.4
+    }
+  }
+}

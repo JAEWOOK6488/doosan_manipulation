@@ -1,0 +1,42 @@
+{
+  "assumption": "controller and detector receive neither true mass nor true COM",
+  "cases": 1000,
+  "distinguished": 528,
+  "success_rate_pct": 52.8,
+  "reference_false_alarm_cases": 97,
+  "missed": 420,
+  "alarm_before": 51,
+  "reference_overlap": 1,
+  "median_delay_ms": 31.59276027859302,
+  "mass_mae_kg": 0.08674920098323238,
+  "rms_tracking_median_mm": 5.557426330028811,
+  "max_tracking_p95_mm": 23.246728531233252,
+  "diverged": 0,
+  "by_phase": {
+    "startup_or_approach": {
+      "cases": 150,
+      "detected": 149,
+      "rate_pct": 99.33333333333333
+    },
+    "pickup_transition": {
+      "cases": 200,
+      "detected": 35,
+      "rate_pct": 17.5
+    },
+    "carry": {
+      "cases": 250,
+      "detected": 156,
+      "rate_pct": 62.4
+    },
+    "place_transition": {
+      "cases": 300,
+      "detected": 102,
+      "rate_pct": 34.0
+    },
+    "return": {
+      "cases": 100,
+      "detected": 86,
+      "rate_pct": 86.0
+    }
+  }
+}

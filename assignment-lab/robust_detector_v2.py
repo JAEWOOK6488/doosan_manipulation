@@ -8,6 +8,7 @@
 고잡음 환경에서는 Cartesian 힘 벡터를 20 ms 평균해 지속 충돌을 복원한다.
 """
 import numpy as np
+from pathlib import Path
 from sim import config as C
 from sim.trajectory import T_GRASP, T_RELEASE
 
@@ -55,6 +56,17 @@ class Detector:
         self.latched = False
         self.blind_baseline = np.zeros(6)
         self.blind_baseline_ready = False
+        self.normal_profile = None
+        if bool(getattr(self, "UNKNOWN_PAYLOAD_V3", False)):
+            profile_path = (
+                Path(__file__).resolve().parent / "results" /
+                "unknown_payload_v3" / "normal_profile.npz"
+            )
+            if profile_path.exists():
+                profile = np.load(profile_path)
+                self.normal_profile = (
+                    profile["center"].copy(), profile["envelope"].copy()
+                )
 
     def _step(self, state, nom, q, tau_s):
         dt = 1e-3
@@ -91,6 +103,7 @@ class Detector:
 
         blind_payload = bool(getattr(self, "UNKNOWN_PAYLOAD", False))
         phase1_unknown = bool(getattr(self, "UNKNOWN_PHASE1_BASELINE", False))
+        blind_v3 = bool(getattr(self, "UNKNOWN_PAYLOAD_V3", False))
         active_nom = self.nom if blind_payload else (self.nom_box if grip else self.nom)
         r_normal = self._step(self.obs["normal"], active_nom, q, tau_link)
         r_empty = self._step(self.obs["empty"], self.nom, q, tau_link)
@@ -129,7 +142,40 @@ class Detector:
                 T_GRASP <= t <= T_GRASP + 0.45
                 or T_RELEASE - 0.35 <= t <= T_RELEASE + 0.35
             )
-        if blind_payload:
+        if blind_payload and blind_v3:
+            # 질량과 COM의 숫자는 몰라도, 강체 payload 중력 토크는
+            # Y(q)[m,m*cx,m*cy,m*cz]가 만드는 4차원 부분공간 안에 있다.
+            # 집기 천이에서는 이 정상 부분공간만 제거하여 나머지 방향의 충돌을
+            # 300 ms 동안 끄지 않고 계속 감시한다. 천이가 끝난 뒤에는 기존의
+            # 느린 기준선을 사용해 자세에 따른 payload 변화를 따라간다.
+            estimator = getattr(self.ctrl, "estimator", None)
+            pickup_transition = bool(T_GRASP <= t <= T_GRASP + 0.45)
+            if grip and pickup_transition and estimator is not None:
+                Y = estimator.regressor(q)
+                nuisance = Y @ np.linalg.lstsq(Y, r_empty, rcond=1e-4)[0]
+                self.r = r_empty - nuisance
+            elif grip:
+                if not self.blind_baseline_ready:
+                    self.blind_baseline = r_empty.copy()
+                    self.blind_baseline_ready = True
+                self.r = r_empty - self.blind_baseline
+                self.blind_baseline += 0.01 * (r_empty - self.blind_baseline)
+            else:
+                self.r = r_normal
+                self.blind_baseline_ready = False
+            settled = not in_transition
+            threshold = (
+                self.threshold_normal if settled
+                else (
+                    np.array([10.0, 20.0, 15.0, 4.0, 12.0, 3.0])
+                    if pickup_transition
+                    else np.maximum(
+                        self.threshold_transition,
+                        np.array([20., 25., 20., 15., 15., 4.]),
+                    )
+                )
+            )
+        elif blind_payload:
             # 질량·COM을 모를 때 절대 payload 토크를 빼지 않는다. 집기 뒤의
             # 잔차를 느린 정상 기준선으로 보고, 그보다 빠른 변화만 외란으로 쓴다.
             if grip and t >= T_GRASP + 0.30:
@@ -231,7 +277,8 @@ class Detector:
         # 제거한다. 다른 방향 충돌은 그대로 남기고, 수직 충돌도 이 짧은 보호
         # 구간 뒤의 지속 잔차로 다시 판정한다.
         contact_guard = bool(
-            not phase1_unknown and T_RELEASE - 0.10 <= t <= T_RELEASE + 0.02
+            not phase1_unknown and not blind_v3
+            and T_RELEASE - 0.10 <= t <= T_RELEASE + 0.02
         )
         guarded_detect_r = detect_r
         if contact_guard:
@@ -246,7 +293,9 @@ class Detector:
         # 관절별 임계값만 쓰면 자세에 따라 같은 Cartesian 힘이 작은 관절
         # 잔차로 투영될 수 있다. 하중 천이와 접근 감속이 끝난 안정 구간에는
         # tau_ext = J_v^T f 관계로 힘 잔차를 복원해 병렬 증거로 사용한다.
-        cartesian_start = T_GRASP + (1.10 if blind_payload else 0.35)
+        cartesian_start = T_GRASP + (
+            0.08 if blind_v3 else (1.10 if blind_payload else 0.35)
+        )
         cartesian_window = bool(
             cartesian_start <= t < T_RELEASE - 0.30
             or t >= T_RELEASE + 0.30
@@ -338,7 +387,7 @@ class Detector:
         # 이 구간의 payload 방향 충돌 감도 저하는 숨기지 않는 한계다.
         blind_identification_or_release = bool(
             blind_payload and (
-                T_GRASP <= t < T_GRASP + 0.30
+                (not blind_v3 and T_GRASP <= t < T_GRASP + 0.30)
                 or T_RELEASE - 0.35 <= t <= T_RELEASE + 0.35
             )
         )
@@ -347,6 +396,11 @@ class Detector:
                 effective_threshold,
                 np.array([30., 100., 75., 25., 60., 15.]),
             )
+        if blind_v3 and self.normal_profile is not None:
+            profile_center, profile_envelope = self.normal_profile
+            profile_index = min(int(round(t / dt)), len(profile_center) - 1)
+            guarded_detect_r = guarded_detect_r - profile_center[profile_index]
+            effective_threshold = profile_envelope[profile_index]
         threshold_cross = bool(np.any(np.abs(guarded_detect_r) > effective_threshold))
         self.cross_history[self.cross_index % len(self.cross_history)] = threshold_cross
         self.cross_index += 1
@@ -355,16 +409,19 @@ class Detector:
         regular_evidence = bool(
             t >= 0.05
             and (
-                self.cross_history.sum() >= 7
-                if high_noise else threshold_cross
+                self.cross_history.sum() >= (5 if blind_v3 else 7)
+                if (blind_v3 or high_noise) else threshold_cross
             )
         )
-        raw_detect = bool(
-            regular_evidence or pre_change or correlated_vertical
-            or calibration_guard or cartesian_evidence
-        )
+        if blind_v3 and self.normal_profile is not None:
+            raw_detect = bool(regular_evidence or pre_change or calibration_guard)
+        else:
+            raw_detect = bool(
+                regular_evidence or pre_change or correlated_vertical
+                or calibration_guard or cartesian_evidence
+            )
         identification_guard = bool(
-            blind_payload and T_GRASP <= t < T_GRASP + 0.30
+            blind_payload and not blind_v3 and T_GRASP <= t < T_GRASP + 0.30
         )
         if identification_guard:
             # 알려지지 않은 payload 자체가 외란인 구간이다. 추가 센서나 사전
