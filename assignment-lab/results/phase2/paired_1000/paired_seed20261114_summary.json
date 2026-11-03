@@ -1,0 +1,10 @@
+{
+  "seed": 20261114,
+  "cases": 100,
+  "v1_distinguished": 76,
+  "v2_distinguished": 96,
+  "v1_reference_false_alarm_cases": 37,
+  "v2_reference_false_alarm_cases": 4,
+  "v1_diverged": 0,
+  "v2_diverged": 0
+}

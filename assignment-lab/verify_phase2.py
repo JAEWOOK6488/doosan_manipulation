@@ -20,6 +20,9 @@ def main() -> None:
     random = load("environment_monte_carlo_v2_summary.json")
     cycle = load("sensitivity_audit_v2_summary.json")
     extended = load("environment_monte_carlo_extended_v2_summary.json")
+    paired = json.loads(
+        (PHASE2 / "paired_1000" / "paired_comparison_summary.json").read_text(encoding="utf-8")
+    )
 
     checks = {
         "고정 환경 무충돌 오경보 0/17": fixed["no_collision_false_alarm_scenarios"] == 0,
@@ -35,6 +38,11 @@ def main() -> None:
         "확장 환경 구분 475/500": extended["distinguished"] == 475,
         "확장 환경 기준 오경보 11/500": extended["reference_false_alarm_cases"] == 11,
         "확장 환경 발산 0": extended["diverged_cases"] == 0,
+        "쌍대 비교 1,000조건/4,000실행": paired["cases"] == 1000 and paired["episodes"] == 4000,
+        "1차 쌍대 구분 773/1,000": paired["v1"]["distinguished"] == 773,
+        "2차 쌍대 구분 941/1,000": paired["v2"]["distinguished"] == 941,
+        "2차 무충돌 오경보 24/1,000": paired["v2"]["reference_false_alarm_cases"] == 24,
+        "쌍대 비교 발산 0": paired["v1"]["diverged_cases"] == 0 and paired["v2"]["diverged_cases"] == 0,
         "표준 평가 저장": (PHASE2 / "final_eval_v2.txt").is_file(),
         "2차 보고서 저장": (ROOT / "PHASE2_REPORT.md").is_file(),
     }
