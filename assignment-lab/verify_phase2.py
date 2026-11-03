@@ -43,6 +43,10 @@ def main() -> None:
         "2차 쌍대 구분 941/1,000": paired["v2"]["distinguished"] == 941,
         "2차 무충돌 오경보 24/1,000": paired["v2"]["reference_false_alarm_cases"] == 24,
         "쌍대 비교 발산 0": paired["v1"]["diverged_cases"] == 0 and paired["v2"]["diverged_cases"] == 0,
+        "쌍대 비교 그래프 저장": (
+            (PHASE2 / "paired_1000" / "paired_comparison_overview.png").is_file()
+            and (PHASE2 / "paired_1000" / "v2_failure_map.png").is_file()
+        ),
         "표준 평가 저장": (PHASE2 / "final_eval_v2.txt").is_file(),
         "2차 보고서 저장": (ROOT / "PHASE2_REPORT.md").is_file(),
     }
