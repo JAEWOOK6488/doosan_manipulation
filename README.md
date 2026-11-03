@@ -17,12 +17,22 @@ python3 -m venv .venv
 .venv/bin/python verify_phase2.py
 ```
 
+> **가정 주의:** 기존 2차의 94.1% 결과는 payload 질량·COM을 제어기와
+> 검출기에 설정한 조건이다. 두 값을 완전히 숨긴 재검증에서는 1,000회 성공률이
+> 51.5%였으며, 현재 센서 구성만으로 미지 payload 강건성을 확보했다고 주장할 수
+> 없다. 자세한 결과는 `assignment-lab/UNKNOWN_PAYLOAD_REPORT.md`에 있다.
+
 기본 시뮬레이션과 2차 검출기는 다음과 같이 실행한다.
 
 ```bash
 .venv/bin/python run.py --ctrl hover_servo --detector robust_detector_v2 --box 8 --viewer
 .venv/bin/python evaluate.py --ctrl hover_servo --detector robust_detector_v2 \
   --out results/phase2/final_eval_v2.txt
+
+# 질량·COM 비공개 수정안과 1,000회 재검증
+.venv/bin/python run.py --ctrl unknown_payload_servo \
+  --detector unknown_payload_detector --box 8 --viewer
+.venv/bin/python unknown_payload_audit.py --cases 1000 --workers 8
 ```
 
 ## 제출
@@ -47,13 +57,14 @@ python3 -m venv .venv
 4. `assignment-lab/PHASE2_REPORT.md`
 5. `assignment-lab/EXTENDED_ROBUSTNESS_REPORT.md`
 6. `assignment-lab/PAIRED_1000_REPORT.md`
-7. `assignment-lab/COMPLIANCE_MATRIX.md`
-8. `assignment-lab/PRESENTATION_OUTLINE.md`
-9. `assignment-lab/PRESENTATION_QA.md`
-10. `assignment-lab/PAPER_NOTES.md`
-11. `assignment-lab/SENSOR_CHANNELS.md`
-12. `assignment-lab/DEMO_SCRIPT.md`
-13. `assignment-lab/final_eval_unmodified_sim.txt`
+7. `assignment-lab/UNKNOWN_PAYLOAD_REPORT.md`
+8. `assignment-lab/COMPLIANCE_MATRIX.md`
+9. `assignment-lab/PRESENTATION_OUTLINE.md`
+10. `assignment-lab/PRESENTATION_QA.md`
+11. `assignment-lab/PAPER_NOTES.md`
+12. `assignment-lab/SENSOR_CHANNELS.md`
+13. `assignment-lab/DEMO_SCRIPT.md`
+14. `assignment-lab/final_eval_unmodified_sim.txt`
 
 `assignment-lab/final_audit.py`는 ZIP 내용·체크섬·평가 요약·보고서 링크를
 검사하며 결과와 환경 버전을 `results/final_audit_manifest.json`에 기록한다.

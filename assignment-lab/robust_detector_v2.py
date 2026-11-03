@@ -53,6 +53,8 @@ class Detector:
         self.force_residual = np.zeros(3)
         self.cartesian_active = False
         self.latched = False
+        self.blind_baseline = np.zeros(6)
+        self.blind_baseline_ready = False
 
     def _step(self, state, nom, q, tau_s):
         dt = 1e-3
@@ -87,16 +89,22 @@ class Detector:
         self.v += 0.2 * (qd - self.v)
         tau_link = self._joint_torque(th, thd, q, qd, tau_s)
 
-        active_nom = self.nom_box if grip else self.nom
+        blind_payload = bool(getattr(self, "UNKNOWN_PAYLOAD", False))
+        active_nom = self.nom if blind_payload else (self.nom_box if grip else self.nom)
         r_normal = self._step(self.obs["normal"], active_nom, q, tau_link)
         r_empty = self._step(self.obs["empty"], self.nom, q, tau_link)
 
         alpha = float(np.clip(getattr(self.ctrl, "alpha", float(grip)), 0.0, 1.0))
-        payload_tau = getattr(
-            self.ctrl,
-            "payload_tau",
-            self.nom_box.gravity(q) - self.nom.gravity(q),
-        )
+        if blind_payload:
+            payload_tau = np.asarray(
+                getattr(self.ctrl, "estimated_payload_tau", np.zeros(6))
+            )
+        else:
+            payload_tau = getattr(
+                self.ctrl,
+                "payload_tau",
+                self.nom_box.gravity(q) - self.nom.gravity(q),
+            )
         # 빈손 관측기에서 정상 하중이 만들 잔차도 같은 1차 동특성으로 예측한다.
         self.expected_load_r += dt * self.K_O * (
             -alpha * payload_tau - self.expected_load_r
@@ -105,14 +113,37 @@ class Detector:
         # 높은 천이 임계값은 실제 하중 모델이 바뀌는 순간부터만 쓴다.
         # 미리 넓게 열면 아직 빈손/완전 하중 모델이 정확한 구간의 작은 충돌을
         # 불필요하게 가리게 된다.
-        release_start = T_RELEASE - (0.042 + 0.0014 * self.box_mass)
+        estimated_mass = float(getattr(self.ctrl, "estimated_mass", 0.0))
+        known_or_estimated_mass = estimated_mass if blind_payload else self.box_mass
+        release_start = T_RELEASE - (0.042 + 0.0014 * known_or_estimated_mass)
         # 물체 관성·흡착 강성이 달라지면 기준 궤적의 가감속 여파가 접촉 뒤에도
         # 남는다. 실제 집기 상승과 놓기 접근 구간 전체를 천이 상태로 다룬다.
         in_transition = (
             T_GRASP <= t <= T_GRASP + 0.45
             or T_RELEASE - 0.35 <= t <= T_RELEASE + 0.35
         )
-        if in_transition:
+        if blind_payload:
+            # 질량·COM을 모를 때 절대 payload 토크를 빼지 않는다. 집기 뒤의
+            # 잔차를 느린 정상 기준선으로 보고, 그보다 빠른 변화만 외란으로 쓴다.
+            if grip and t >= T_GRASP + 0.30:
+                if not self.blind_baseline_ready:
+                    self.blind_baseline = r_empty.copy()
+                    self.blind_baseline_ready = True
+                self.r = r_empty - self.blind_baseline
+                # 100 ms 시정수: 자세에 따른 중력 변화는 따라가되 20 ms 충돌
+                # 상승은 잔차로 남긴다. 판정은 갱신 전의 차이를 사용한다.
+                self.blind_baseline += 0.01 * (r_empty - self.blind_baseline)
+            elif grip:
+                self.r = r_empty
+            else:
+                self.r = r_normal
+                self.blind_baseline_ready = False
+            settled = not in_transition
+            threshold = self.threshold_normal if settled else self.threshold_transition
+            threshold = np.maximum(
+                threshold, np.array([20., 25., 20., 15., 15., 4.])
+            )
+        elif in_transition:
             denom = float(payload_tau @ payload_tau)
             if denom > 1e-8:
                 orthogonal = r_empty - payload_tau * float(r_empty @ payload_tau) / denom
@@ -131,6 +162,8 @@ class Detector:
                 if settled else self.threshold_transition
             )
         else:
+            # 미지 payload 모드에서는 빈손 관측기의 정상 하중 잔차에서 JTS로
+            # 식별한 예상 잔차를 뺀다. 실제 mass/COM 모델은 접근하지 않는다.
             self.r = r_normal
             threshold = self.threshold_normal
 
@@ -204,8 +237,9 @@ class Detector:
         # 관절별 임계값만 쓰면 자세에 따라 같은 Cartesian 힘이 작은 관절
         # 잔차로 투영될 수 있다. 하중 천이와 접근 감속이 끝난 안정 구간에는
         # tau_ext = J_v^T f 관계로 힘 잔차를 복원해 병렬 증거로 사용한다.
+        cartesian_start = T_GRASP + (1.10 if blind_payload else 0.35)
         cartesian_window = bool(
-            T_GRASP + 0.35 <= t < T_RELEASE - 0.30
+            cartesian_start <= t < T_RELEASE - 0.30
             or t >= T_RELEASE + 0.30
         )
         if cartesian_window and not self.cartesian_active:
@@ -231,10 +265,13 @@ class Detector:
             self.force_residual[:] = 0.0
         # 크기(norm)를 먼저 평균하면 영평균 잡음도 양의 힘처럼 누적된다.
         # 환경과 무관하게 20 ms 힘 벡터를 먼저 평균한 뒤 크기를 취한다.
+        cartesian_threshold = (
+            9.5 if blind_payload else (9.0 if high_noise else 8.5)
+        )
         averaged_force = bool(
             self.force_vector_index >= len(self.force_vector_history)
             and np.linalg.norm(self.force_vector_history.mean(axis=0))
-            > (9.0 if high_noise else 8.5)
+            > cartesian_threshold
         )
         cartesian_evidence = bool(cartesian_window and averaged_force)
 
@@ -275,6 +312,20 @@ class Detector:
             np.maximum(threshold, np.array([15., 30., 15., 5., 12., 3.]))
             if contact_guard else threshold
         )
+        # 미지 payload를 처음 집는 동안에는 질량 추정치가 아직 없으므로 정상
+        # 하중이 크게 나타나는 J2/J5 문턱만 잠시 넓힌다. 나머지 축은 계속 본다.
+        # 이 구간의 payload 방향 충돌 감도 저하는 숨기지 않는 한계다.
+        blind_identification_or_release = bool(
+            blind_payload and (
+                T_GRASP <= t < T_GRASP + 0.30
+                or T_RELEASE - 0.35 <= t <= T_RELEASE + 0.35
+            )
+        )
+        if blind_identification_or_release:
+            effective_threshold = np.maximum(
+                effective_threshold,
+                np.array([30., 100., 75., 25., 60., 15.]),
+            )
         threshold_cross = bool(np.any(np.abs(guarded_detect_r) > effective_threshold))
         self.cross_history[self.cross_index % len(self.cross_history)] = threshold_cross
         self.cross_index += 1
@@ -291,6 +342,14 @@ class Detector:
             regular_evidence or pre_change or correlated_vertical
             or calibration_guard or cartesian_evidence
         )
+        identification_guard = bool(
+            blind_payload and T_GRASP <= t < T_GRASP + 0.30
+        )
+        if identification_guard:
+            # 알려지지 않은 payload 자체가 외란인 구간이다. 추가 센서나 사전
+            # 정보 없이 같은 방향 충돌과 하중 취득을 구분할 수 없어 판정을
+            # 보류한다. 이 300 ms 감지 공백은 보고서에 명시하는 한계다.
+            raw_detect = False
         self.last_evidence = {
             "regular": regular_evidence,
             "pre_change": pre_change,
@@ -300,6 +359,7 @@ class Detector:
             "contact_guard": contact_guard,
             "high_noise": high_noise,
             "threshold_cross": threshold_cross,
+            "identification_guard": identification_guard,
             "guarded_detect_r": guarded_detect_r.copy(),
             "threshold": effective_threshold.copy(),
         }

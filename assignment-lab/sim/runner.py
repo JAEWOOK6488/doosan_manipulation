@@ -28,15 +28,19 @@ def run_episode(controller, box_mass=6.0, box_com=(0.02, -0.01, 0.03), detector=
     반환: 지표 dict + 시계열 log."""
     servo = getattr(controller, "MODE", "torque") == "servo"
     nom, drive = Nominal(), Drive()
-    controller.nom, controller.nom_box = nom, _with_box(box_mass, box_com)
-    controller.box_mass, controller.box_com = float(box_mass), tuple(box_com)   # 과제 가정: 박스 값은 안다
+    controller.nom = nom
+    if not getattr(controller, "UNKNOWN_PAYLOAD", False):
+        controller.nom_box = _with_box(box_mass, box_com)
+        controller.box_mass, controller.box_com = float(box_mass), tuple(box_com)
     if servo:
         controller.drive = drive
     if hasattr(controller, "reset"):
         controller.reset()
     if detector is not None:
-        detector.nom, detector.nom_box, detector.ctrl = Nominal(), _with_box(box_mass, box_com), controller
-        detector.box_mass, detector.box_com = float(box_mass), tuple(box_com)
+        detector.nom, detector.ctrl = Nominal(), controller
+        if not getattr(detector, "UNKNOWN_PAYLOAD", False):
+            detector.nom_box = _with_box(box_mass, box_com)
+            detector.box_mass, detector.box_com = float(box_mass), tuple(box_com)
         if hasattr(detector, "reset"):
             detector.reset()
     q0 = T.reference(0.0)[0]
