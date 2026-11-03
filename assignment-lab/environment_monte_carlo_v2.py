@@ -32,6 +32,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--cases", type=int, default=60)
     parser.add_argument("--seed", type=int, default=20261102)
+    parser.add_argument("--tag", default="environment_monte_carlo_v2")
     args = parser.parse_args()
     rng = np.random.default_rng(args.seed)
     rows = []
@@ -85,7 +86,7 @@ def main() -> None:
             delay is not None and not result["alarm_before_collision"] and not reference_alarm
         )
         rows.append({
-            "case": i, "mass_kg": mass,
+            "seed": args.seed, "case": i, "mass_kg": mass,
             "size_x_scale": size_scale[0], "size_y_scale": size_scale[1],
             "size_z_scale": size_scale[2],
             "com_x_m": com[0], "com_y_m": com[1], "com_z_m": com[2],
@@ -112,9 +113,9 @@ def main() -> None:
         if (i + 1) % 10 == 0:
             print(f"  {i + 1}/{args.cases} cases complete", flush=True)
 
-    path = OUT / "environment_monte_carlo_v2.csv"
+    path = OUT / f"{args.tag}.csv"
     with path.open("w", newline="", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=rows[0].keys())
+        writer = csv.DictWriter(file, fieldnames=rows[0].keys(), lineterminator="\n")
         writer.writeheader(); writer.writerows(rows)
     good = [r for r in rows if r["distinguished"]]
     failures = [r for r in rows if not r["distinguished"]]
@@ -132,7 +133,7 @@ def main() -> None:
         "max_error_mm": max(r["max_mm"] for r in rows),
         "failures": failures,
     }
-    (OUT / "environment_monte_carlo_v2_summary.json").write_text(
+    (OUT / f"{args.tag}_summary.json").write_text(
         json.dumps(summary, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
     )
     print(json.dumps(summary, indent=2, ensure_ascii=False))

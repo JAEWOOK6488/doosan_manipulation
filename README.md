@@ -45,13 +45,14 @@ python3 -m venv .venv
 2. `assignment-lab/ONE_PAGE_SUMMARY.md`
 3. `assignment-lab/FINAL_STATUS.md`
 4. `assignment-lab/PHASE2_REPORT.md`
-5. `assignment-lab/COMPLIANCE_MATRIX.md`
-6. `assignment-lab/PRESENTATION_OUTLINE.md`
-7. `assignment-lab/PRESENTATION_QA.md`
-8. `assignment-lab/PAPER_NOTES.md`
-9. `assignment-lab/SENSOR_CHANNELS.md`
-10. `assignment-lab/DEMO_SCRIPT.md`
-11. `assignment-lab/final_eval_unmodified_sim.txt`
+5. `assignment-lab/EXTENDED_ROBUSTNESS_REPORT.md`
+6. `assignment-lab/COMPLIANCE_MATRIX.md`
+7. `assignment-lab/PRESENTATION_OUTLINE.md`
+8. `assignment-lab/PRESENTATION_QA.md`
+9. `assignment-lab/PAPER_NOTES.md`
+10. `assignment-lab/SENSOR_CHANNELS.md`
+11. `assignment-lab/DEMO_SCRIPT.md`
+12. `assignment-lab/final_eval_unmodified_sim.txt`
 
 `assignment-lab/final_audit.py`는 ZIP 내용·체크섬·평가 요약·보고서 링크를
 검사하며 결과와 환경 버전을 `results/final_audit_manifest.json`에 기록한다.
