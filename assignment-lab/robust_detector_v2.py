@@ -90,6 +90,7 @@ class Detector:
         tau_link = self._joint_torque(th, thd, q, qd, tau_s)
 
         blind_payload = bool(getattr(self, "UNKNOWN_PAYLOAD", False))
+        phase1_unknown = bool(getattr(self, "UNKNOWN_PHASE1_BASELINE", False))
         active_nom = self.nom if blind_payload else (self.nom_box if grip else self.nom)
         r_normal = self._step(self.obs["normal"], active_nom, q, tau_link)
         r_empty = self._step(self.obs["empty"], self.nom, q, tau_link)
@@ -118,10 +119,16 @@ class Detector:
         release_start = T_RELEASE - (0.042 + 0.0014 * known_or_estimated_mass)
         # 물체 관성·흡착 강성이 달라지면 기준 궤적의 가감속 여파가 접촉 뒤에도
         # 남는다. 실제 집기 상승과 놓기 접근 구간 전체를 천이 상태로 다룬다.
-        in_transition = (
-            T_GRASP <= t <= T_GRASP + 0.45
-            or T_RELEASE - 0.35 <= t <= T_RELEASE + 0.35
-        )
+        if phase1_unknown:
+            in_transition = (
+                T_GRASP <= t <= T_GRASP + 0.30
+                or release_start <= t <= T_RELEASE + 0.30
+            )
+        else:
+            in_transition = (
+                T_GRASP <= t <= T_GRASP + 0.45
+                or T_RELEASE - 0.35 <= t <= T_RELEASE + 0.35
+            )
         if blind_payload:
             # 질량·COM을 모를 때 절대 payload 토크를 빼지 않는다. 집기 뒤의
             # 잔차를 느린 정상 기준선으로 보고, 그보다 빠른 변화만 외란으로 쓴다.
@@ -223,7 +230,9 @@ class Detector:
         # 놓기 직전에는 작업대 높이·강성 차이가 만드는 정상 수직 접촉 성분만
         # 제거한다. 다른 방향 충돌은 그대로 남기고, 수직 충돌도 이 짧은 보호
         # 구간 뒤의 지속 잔차로 다시 판정한다.
-        contact_guard = bool(T_RELEASE - 0.10 <= t <= T_RELEASE + 0.02)
+        contact_guard = bool(
+            not phase1_unknown and T_RELEASE - 0.10 <= t <= T_RELEASE + 0.02
+        )
         guarded_detect_r = detect_r
         if contact_guard:
             Jv_guard = self.nom.jacobian(q)
@@ -265,14 +274,21 @@ class Detector:
             self.force_residual[:] = 0.0
         # 크기(norm)를 먼저 평균하면 영평균 잡음도 양의 힘처럼 누적된다.
         # 환경과 무관하게 20 ms 힘 벡터를 먼저 평균한 뒤 크기를 취한다.
-        cartesian_threshold = (
-            9.5 if blind_payload else (9.0 if high_noise else 8.5)
-        )
-        averaged_force = bool(
-            self.force_vector_index >= len(self.force_vector_history)
-            and np.linalg.norm(self.force_vector_history.mean(axis=0))
-            > cartesian_threshold
-        )
+        if phase1_unknown:
+            averaged_force = bool(
+                not high_noise
+                and self.force_index >= len(self.force_history)
+                and self.force_history.mean() > 8.5
+            )
+        else:
+            cartesian_threshold = (
+                9.5 if blind_payload else (9.0 if high_noise else 8.5)
+            )
+            averaged_force = bool(
+                self.force_vector_index >= len(self.force_vector_history)
+                and np.linalg.norm(self.force_vector_history.mean(axis=0))
+                > cartesian_threshold
+            )
         cartesian_evidence = bool(cartesian_window and averaged_force)
 
         # 집기 접근 전 안전 구간에서 잔차 기준선을 정한다. 접근 80 ms 동안은
@@ -289,10 +305,14 @@ class Detector:
             if self.pre_dev_count >= len(self.pre_dev):
                 # 모든 축에서 교정 구간 표준편차를 반영한다. 고정 임계값만 쓰면
                 # 잡음이 큰 물체·환경에서 5 ms 변화 평균을 충돌로 오인한다.
-                pre_threshold = np.maximum(
-                    self.threshold_pre_change,
-                    3.5 * np.sqrt(late_var),
-                )
+                if phase1_unknown:
+                    pre_threshold = self.threshold_pre_change.copy()
+                    pre_threshold[1] = max(2.0, 1.7 * float(np.sqrt(late_var[1])))
+                else:
+                    pre_threshold = np.maximum(
+                        self.threshold_pre_change,
+                        3.5 * np.sqrt(late_var),
+                    )
                 pre_change = bool(np.any(self.pre_dev.mean(axis=0) > pre_threshold))
 
         # 놓기 직후 +Z 충돌은 하중 해제 잔차와 단일 축에서 상쇄되지만 J2/J3에
@@ -306,7 +326,8 @@ class Detector:
         self.vertical_history[self.vertical_index % len(self.vertical_history)] = vertical_candidate
         self.vertical_index += 1
         correlated_vertical = bool(
-            self.vertical_index >= 5 and self.vertical_history.sum() >= 5
+            vertical_candidate if phase1_unknown
+            else self.vertical_index >= 5 and self.vertical_history.sum() >= 5
         )
         effective_threshold = (
             np.maximum(threshold, np.array([15., 30., 15., 5., 12., 3.]))

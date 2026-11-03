@@ -56,6 +56,29 @@
 
 ![미지 payload 1,000회 결과](results/unknown_payload/unknown_payload_summary.png)
 
+## 동일 가정의 1차·2차 비교
+
+기존 1차는 실제 질량·COM을 요구하므로 그대로는 공정 비교가 불가능하다. 비교용
+1차-미지 기준안은 두 값을 숨기고 2차와 같은 JTS 추정 제어기를 사용하되,
+1차의 짧은 천이창·5 ms 힘 크기 평균·기본 놓기 판정을 유지했다. 2차에서 추가한
+확장 천이창, 예상 수직 접촉방향 제거, 20 ms 힘 벡터 평균은 사용하지 않았다.
+
+| 동일 1,000조건 | 1차-미지 기준안 | 2차-미지 개선안 |
+|---|---:|---:|
+| 전체 충돌 구분 | 346/1000 (**34.6%**) | 515/1000 (**51.5%**) |
+| 무충돌 경보 조건 | 245/1000 | 90/1000 |
+| 시작·접근 | 99.3% | 99.3% |
+| 집기 천이 | 18.5% | 18.5% |
+| 운반 | 18.0% | 58.8% |
+| 놓기 천이 | 24.0% | 31.3% |
+| 복귀 | 43.0% | 88.0% |
+
+2차는 **+16.9%p** 개선됐고 무충돌 경보 조건을 63.3% 줄였다. 개선은 주로
+운반과 복귀에서 발생했다. 집기 천이는 두 안 모두 18.5%이므로, 미지 payload를
+처음 취득하는 구간은 해결되지 않았다.
+
+![미지 payload 1차·2차 비교](results/unknown_payload/phase1_vs_unknown_phase2.png)
+
 ## 결론
 
 질량 자체는 JTS로 비교적 잘 추정했지만, 그 사실만으로 충돌 검출 강건성이
@@ -83,3 +106,5 @@
 
 - 원자료: `results/unknown_payload/unknown_payload_1000.csv`
 - 요약: `results/unknown_payload/summary.json`
+- 공정 비교 원자료: `results/unknown_payload/phase1_vs_unknown_phase2_1000.csv`
+- 공정 비교 요약: `results/unknown_payload/phase1_vs_unknown_phase2_summary.json`

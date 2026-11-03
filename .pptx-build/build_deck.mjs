@@ -10,7 +10,7 @@ const buildDir = path.join(workspaceDir, ".pptx-build");
 const previewDir = path.join(buildDir, "previews");
 const stagingDir = path.join(workspaceDir, ".codex-finalizer");
 const outputDir = path.join(workspaceDir, "presentation-output");
-const FINAL_PPTX = path.join(outputDir, "Doosan_M1013_충돌감지_개선_미지Payload가정_최종수정.pptx");
+const FINAL_PPTX = path.join(outputDir, "Doosan_M1013_충돌감지_개선_미지Payload_1000회비교.pptx");
 
 const W = 1280, H = 720;
 const C = {
@@ -119,8 +119,8 @@ function notes(slide, duration, script, sources=[]) {
   textBox(s, "2차", 410, 462, 100, 30, { fontSize: 19, bold: true, color: C.coral });
   textBox(s, "94.1%", 410, 494, 250, 72, { fontSize: 55, bold: true, color: C.orange });
   textBox(s, "충돌 구분률 · payload 값 제공 조건", 80, 585, 530, 30, { fontSize: 20, color: "#B9C6D2" });
-  addPill(s, "미지 payload 재검증 51.5%", 790, 500, 370, C.teal);
-  notes(s, "30초", "안녕하세요. 이 발표에서는 정상 하중 전달의 충돌 오경보를 줄이는 과정을 설명합니다. 94.1퍼센트는 질량과 COM 설정값을 제공한 조건입니다. 마지막에는 두 값을 숨긴 재검증 결과 51.5퍼센트와 그 한계를 함께 보고합니다.", ["assignment-lab/PAIRED_1000_REPORT.md", "assignment-lab/UNKNOWN_PAYLOAD_REPORT.md"]);
+  addPill(s, "미지 payload 34.6 → 51.5%", 770, 500, 410, C.teal);
+  notes(s, "30초", "안녕하세요. 이 발표에서는 정상 하중 전달의 충돌 오경보를 줄이는 과정을 설명합니다. 94.1퍼센트는 질량과 COM 설정값을 제공한 조건입니다. 두 값을 모두 숨긴 공정 비교에서는 1차 기준안 34.6퍼센트, 2차 51.5퍼센트였습니다.", ["assignment-lab/PAIRED_1000_REPORT.md", "assignment-lab/UNKNOWN_PAYLOAD_REPORT.md"]);
 }
 
 // 2. Goal
@@ -354,9 +354,9 @@ function notes(slide, duration, script, sources=[]) {
   textBox(s, "완전 미검출 41\n충돌 전 경보 18\n미검출 중 놓기 천이 30", 884, 252, 274, 92, { fontSize: 21, color: C.navy, align: "center", lineSpacing: 1.22 });
   shape(s, "roundRect", 846, 382, 350, 164, C.tealPale, C.teal, 2, "rounded-xl");
   textBox(s, "질량·COM 비공개 재검증", 864, 400, 314, 36, { fontSize: 23, bold: true, color: C.teal, align: "center" });
-  textBox(s, "515 / 1000 (51.5%)\n무충돌 조건 경보 9.0%\n집기 18.5% · 놓기 31.3%", 874, 448, 294, 90, { fontSize: 20, bold: true, color: C.navy, align: "center", lineSpacing: 1.18 });
+  textBox(s, "1차 34.6 → 2차 51.5%\n개선 +16.9%p\n무충돌 경보 245 → 90건", 874, 448, 294, 90, { fontSize: 20, bold: true, color: C.navy, align: "center", lineSpacing: 1.18 });
   textBox(s, "결론: 현재 방식은 미지 payload 강건성을 확보하지 못했다", 108, 596, 1060, 48, { fontSize: 25, bold: true, color: C.red, align: "center", valign: "middle" });
-  notes(s, "50초", "기존 2차의 94.1퍼센트는 질량과 COM 설정값을 제공한 조건입니다. 두 값을 완전히 숨기고 1,000회 다시 검사하자 성공률은 51.5퍼센트였습니다. 질량 추정 오차는 작았지만 집기와 놓기에서 정상 하중과 충돌을 분리하지 못했습니다. 따라서 미지 payload까지 해결했다고 주장하지 않고, 이것을 남은 핵심 한계로 보고합니다.", ["assignment-lab/PAIRED_1000_REPORT.md", "assignment-lab/UNKNOWN_PAYLOAD_REPORT.md"]);
+  notes(s, "50초", "기존 94.1퍼센트는 질량과 COM 설정값을 제공한 조건입니다. 두 안 모두 값을 숨기고 같은 제어기와 1,000조건으로 다시 비교하자 1차 기준안은 34.6퍼센트, 2차는 51.5퍼센트였습니다. 16.9퍼센트포인트 개선됐지만 절대 성능은 낮습니다. 특히 집기 천이는 둘 다 18.5퍼센트여서 미지 payload 문제를 해결했다고 주장할 수 없습니다.", ["assignment-lab/UNKNOWN_PAYLOAD_REPORT.md", "assignment-lab/results/unknown_payload/phase1_vs_unknown_phase2_summary.json"]);
 }
 
 // 11. Future work

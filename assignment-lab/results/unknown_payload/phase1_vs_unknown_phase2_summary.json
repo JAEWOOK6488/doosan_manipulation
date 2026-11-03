@@ -1,0 +1,40 @@
+{
+  "comparison_warning": "both hide true mass/COM; phase1 is an adapted unknown-payload baseline",
+  "cases": 1000,
+  "phase1_unknown_payload_success": 346,
+  "phase1_unknown_payload_pct": 34.6,
+  "phase2_unknown_payload_success": 515,
+  "phase2_unknown_payload_pct": 51.5,
+  "difference_percentage_points": 16.9,
+  "phase1_only_success": 23,
+  "phase2_only_success": 192,
+  "phase1_reference_false_alarm_cases": 245,
+  "phase2_unknown_reference_false_alarm_cases": 90,
+  "by_phase": {
+    "startup_or_approach": {
+      "cases": 150,
+      "phase1_unknown_payload_pct": 99.33333333333333,
+      "phase2_unknown_payload_pct": 99.33333333333333
+    },
+    "pickup_transition": {
+      "cases": 200,
+      "phase1_unknown_payload_pct": 18.5,
+      "phase2_unknown_payload_pct": 18.5
+    },
+    "carry": {
+      "cases": 250,
+      "phase1_unknown_payload_pct": 18.0,
+      "phase2_unknown_payload_pct": 58.8
+    },
+    "place_transition": {
+      "cases": 300,
+      "phase1_unknown_payload_pct": 24.0,
+      "phase2_unknown_payload_pct": 31.333333333333332
+    },
+    "return": {
+      "cases": 100,
+      "phase1_unknown_payload_pct": 43.0,
+      "phase2_unknown_payload_pct": 88.0
+    }
+  }
+}
