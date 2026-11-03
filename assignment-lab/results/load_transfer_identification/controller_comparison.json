@@ -1,0 +1,420 @@
+{
+  "summary": {
+    "current_smoothstep": {
+      "rms_mm": 5.419369701119316,
+      "max_mm": 10.915385329208268,
+      "pick_torque_step_Nm": 4.640517422968358,
+      "place_torque_step_Nm": 4.284809347431455,
+      "table_force_N": 59.0630577402121
+    },
+    "data_fitted": {
+      "rms_mm": 5.443895945390677,
+      "max_mm": 12.105319069679702,
+      "pick_torque_step_Nm": 4.874838389898166,
+      "place_torque_step_Nm": 4.676901033821494,
+      "table_force_N": 73.60739681135763
+    }
+  },
+  "runs": [
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 2.0,
+      "repeat": 0,
+      "rms_mm": 4.905865980081775,
+      "max_mm": 9.997319873744742,
+      "pick_torque_step_Nm": 3.780038820062856,
+      "place_torque_step_Nm": 3.4547550448971265,
+      "table_force_N": 25.26213785410268
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 2.0,
+      "repeat": 0,
+      "rms_mm": 4.91787731628466,
+      "max_mm": 10.646174545401923,
+      "pick_torque_step_Nm": 3.7113195680519766,
+      "place_torque_step_Nm": 3.636466061502574,
+      "table_force_N": 31.54399708894929
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 2.0,
+      "repeat": 1,
+      "rms_mm": 4.905865980081775,
+      "max_mm": 9.997319873744742,
+      "pick_torque_step_Nm": 3.780038820062856,
+      "place_torque_step_Nm": 3.4547550448971265,
+      "table_force_N": 25.26213785410268
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 2.0,
+      "repeat": 1,
+      "rms_mm": 4.91787731628466,
+      "max_mm": 10.646174545401923,
+      "pick_torque_step_Nm": 3.7113195680519766,
+      "place_torque_step_Nm": 3.636466061502574,
+      "table_force_N": 31.54399708894929
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 2.0,
+      "repeat": 2,
+      "rms_mm": 4.905865980081775,
+      "max_mm": 9.997319873744742,
+      "pick_torque_step_Nm": 3.780038820062856,
+      "place_torque_step_Nm": 3.4547550448971265,
+      "table_force_N": 25.26213785410268
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 2.0,
+      "repeat": 2,
+      "rms_mm": 4.91787731628466,
+      "max_mm": 10.646174545401923,
+      "pick_torque_step_Nm": 3.7113195680519766,
+      "place_torque_step_Nm": 3.636466061502574,
+      "table_force_N": 31.54399708894929
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 2.0,
+      "repeat": 3,
+      "rms_mm": 4.905865980081775,
+      "max_mm": 9.997319873744742,
+      "pick_torque_step_Nm": 3.780038820062856,
+      "place_torque_step_Nm": 3.4547550448971265,
+      "table_force_N": 25.26213785410268
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 2.0,
+      "repeat": 3,
+      "rms_mm": 4.91787731628466,
+      "max_mm": 10.646174545401923,
+      "pick_torque_step_Nm": 3.7113195680519766,
+      "place_torque_step_Nm": 3.636466061502574,
+      "table_force_N": 31.54399708894929
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 2.0,
+      "repeat": 4,
+      "rms_mm": 4.905865980081775,
+      "max_mm": 9.997319873744742,
+      "pick_torque_step_Nm": 3.780038820062856,
+      "place_torque_step_Nm": 3.4547550448971265,
+      "table_force_N": 25.26213785410268
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 2.0,
+      "repeat": 4,
+      "rms_mm": 4.91787731628466,
+      "max_mm": 10.646174545401923,
+      "pick_torque_step_Nm": 3.7113195680519766,
+      "place_torque_step_Nm": 3.636466061502574,
+      "table_force_N": 31.54399708894929
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 4.0,
+      "repeat": 0,
+      "rms_mm": 5.233975423962937,
+      "max_mm": 10.606740474467944,
+      "pick_torque_step_Nm": 4.215791382947103,
+      "place_torque_step_Nm": 3.9556194543129948,
+      "table_force_N": 48.20758035678888
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 4.0,
+      "repeat": 0,
+      "rms_mm": 5.254434010981133,
+      "max_mm": 11.680410438614452,
+      "pick_torque_step_Nm": 4.6354730432067015,
+      "place_torque_step_Nm": 4.4101218228723695,
+      "table_force_N": 58.266769718868865
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 4.0,
+      "repeat": 1,
+      "rms_mm": 5.233975423962937,
+      "max_mm": 10.606740474467944,
+      "pick_torque_step_Nm": 4.215791382947103,
+      "place_torque_step_Nm": 3.9556194543129948,
+      "table_force_N": 48.20758035678888
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 4.0,
+      "repeat": 1,
+      "rms_mm": 5.254434010981133,
+      "max_mm": 11.680410438614452,
+      "pick_torque_step_Nm": 4.6354730432067015,
+      "place_torque_step_Nm": 4.4101218228723695,
+      "table_force_N": 58.266769718868865
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 4.0,
+      "repeat": 2,
+      "rms_mm": 5.233975423962937,
+      "max_mm": 10.606740474467944,
+      "pick_torque_step_Nm": 4.215791382947103,
+      "place_torque_step_Nm": 3.9556194543129948,
+      "table_force_N": 48.20758035678888
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 4.0,
+      "repeat": 2,
+      "rms_mm": 5.254434010981133,
+      "max_mm": 11.680410438614452,
+      "pick_torque_step_Nm": 4.6354730432067015,
+      "place_torque_step_Nm": 4.4101218228723695,
+      "table_force_N": 58.266769718868865
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 4.0,
+      "repeat": 3,
+      "rms_mm": 5.233975423962937,
+      "max_mm": 10.606740474467944,
+      "pick_torque_step_Nm": 4.215791382947103,
+      "place_torque_step_Nm": 3.9556194543129948,
+      "table_force_N": 48.20758035678888
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 4.0,
+      "repeat": 3,
+      "rms_mm": 5.254434010981133,
+      "max_mm": 11.680410438614452,
+      "pick_torque_step_Nm": 4.6354730432067015,
+      "place_torque_step_Nm": 4.4101218228723695,
+      "table_force_N": 58.266769718868865
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 4.0,
+      "repeat": 4,
+      "rms_mm": 5.233975423962937,
+      "max_mm": 10.606740474467944,
+      "pick_torque_step_Nm": 4.215791382947103,
+      "place_torque_step_Nm": 3.9556194543129948,
+      "table_force_N": 48.20758035678888
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 4.0,
+      "repeat": 4,
+      "rms_mm": 5.254434010981133,
+      "max_mm": 11.680410438614452,
+      "pick_torque_step_Nm": 4.6354730432067015,
+      "place_torque_step_Nm": 4.4101218228723695,
+      "table_force_N": 58.266769718868865
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 6.0,
+      "repeat": 0,
+      "rms_mm": 5.58392023956947,
+      "max_mm": 11.21986041091052,
+      "pick_torque_step_Nm": 4.973943543605131,
+      "place_torque_step_Nm": 4.662199872342995,
+      "table_force_N": 70.66188275842188
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 6.0,
+      "repeat": 0,
+      "rms_mm": 5.6120565378918945,
+      "max_mm": 12.608505043505614,
+      "pick_torque_step_Nm": 5.195287943742443,
+      "place_torque_step_Nm": 5.230832960951616,
+      "table_force_N": 86.56718748382038
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 6.0,
+      "repeat": 1,
+      "rms_mm": 5.58392023956947,
+      "max_mm": 11.21986041091052,
+      "pick_torque_step_Nm": 4.973943543605131,
+      "place_torque_step_Nm": 4.662199872342995,
+      "table_force_N": 70.66188275842188
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 6.0,
+      "repeat": 1,
+      "rms_mm": 5.6120565378918945,
+      "max_mm": 12.608505043505614,
+      "pick_torque_step_Nm": 5.195287943742443,
+      "place_torque_step_Nm": 5.230832960951616,
+      "table_force_N": 86.56718748382038
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 6.0,
+      "repeat": 2,
+      "rms_mm": 5.58392023956947,
+      "max_mm": 11.21986041091052,
+      "pick_torque_step_Nm": 4.973943543605131,
+      "place_torque_step_Nm": 4.662199872342995,
+      "table_force_N": 70.66188275842188
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 6.0,
+      "repeat": 2,
+      "rms_mm": 5.6120565378918945,
+      "max_mm": 12.608505043505614,
+      "pick_torque_step_Nm": 5.195287943742443,
+      "place_torque_step_Nm": 5.230832960951616,
+      "table_force_N": 86.56718748382038
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 6.0,
+      "repeat": 3,
+      "rms_mm": 5.58392023956947,
+      "max_mm": 11.21986041091052,
+      "pick_torque_step_Nm": 4.973943543605131,
+      "place_torque_step_Nm": 4.662199872342995,
+      "table_force_N": 70.66188275842188
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 6.0,
+      "repeat": 3,
+      "rms_mm": 5.6120565378918945,
+      "max_mm": 12.608505043505614,
+      "pick_torque_step_Nm": 5.195287943742443,
+      "place_torque_step_Nm": 5.230832960951616,
+      "table_force_N": 86.56718748382038
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 6.0,
+      "repeat": 4,
+      "rms_mm": 5.58392023956947,
+      "max_mm": 11.21986041091052,
+      "pick_torque_step_Nm": 4.973943543605131,
+      "place_torque_step_Nm": 4.662199872342995,
+      "table_force_N": 70.66188275842188
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 6.0,
+      "repeat": 4,
+      "rms_mm": 5.6120565378918945,
+      "max_mm": 12.608505043505614,
+      "pick_torque_step_Nm": 5.195287943742443,
+      "place_torque_step_Nm": 5.230832960951616,
+      "table_force_N": 86.56718748382038
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 8.0,
+      "repeat": 0,
+      "rms_mm": 5.953717160863085,
+      "max_mm": 11.837620557709858,
+      "pick_torque_step_Nm": 5.592295945258343,
+      "place_torque_step_Nm": 5.066663018172704,
+      "table_force_N": 92.12062999153498
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 8.0,
+      "repeat": 0,
+      "rms_mm": 5.991215916405024,
+      "max_mm": 13.486186251196825,
+      "pick_torque_step_Nm": 5.957273004591542,
+      "place_torque_step_Nm": 5.430183289959416,
+      "table_force_N": 118.05163295379202
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 8.0,
+      "repeat": 1,
+      "rms_mm": 5.953717160863085,
+      "max_mm": 11.837620557709858,
+      "pick_torque_step_Nm": 5.592295945258343,
+      "place_torque_step_Nm": 5.066663018172704,
+      "table_force_N": 92.12062999153498
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 8.0,
+      "repeat": 1,
+      "rms_mm": 5.991215916405024,
+      "max_mm": 13.486186251196825,
+      "pick_torque_step_Nm": 5.957273004591542,
+      "place_torque_step_Nm": 5.430183289959416,
+      "table_force_N": 118.05163295379202
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 8.0,
+      "repeat": 2,
+      "rms_mm": 5.953717160863085,
+      "max_mm": 11.837620557709858,
+      "pick_torque_step_Nm": 5.592295945258343,
+      "place_torque_step_Nm": 5.066663018172704,
+      "table_force_N": 92.12062999153498
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 8.0,
+      "repeat": 2,
+      "rms_mm": 5.991215916405024,
+      "max_mm": 13.486186251196825,
+      "pick_torque_step_Nm": 5.957273004591542,
+      "place_torque_step_Nm": 5.430183289959416,
+      "table_force_N": 118.05163295379202
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 8.0,
+      "repeat": 3,
+      "rms_mm": 5.953717160863085,
+      "max_mm": 11.837620557709858,
+      "pick_torque_step_Nm": 5.592295945258343,
+      "place_torque_step_Nm": 5.066663018172704,
+      "table_force_N": 92.12062999153498
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 8.0,
+      "repeat": 3,
+      "rms_mm": 5.991215916405024,
+      "max_mm": 13.486186251196825,
+      "pick_torque_step_Nm": 5.957273004591542,
+      "place_torque_step_Nm": 5.430183289959416,
+      "table_force_N": 118.05163295379202
+    },
+    {
+      "profile": "current_smoothstep",
+      "mass_kg": 8.0,
+      "repeat": 4,
+      "rms_mm": 5.953717160863085,
+      "max_mm": 11.837620557709858,
+      "pick_torque_step_Nm": 5.592295945258343,
+      "place_torque_step_Nm": 5.066663018172704,
+      "table_force_N": 92.12062999153498
+    },
+    {
+      "profile": "data_fitted",
+      "mass_kg": 8.0,
+      "repeat": 4,
+      "rms_mm": 5.991215916405024,
+      "max_mm": 13.486186251196825,
+      "pick_torque_step_Nm": 5.957273004591542,
+      "place_torque_step_Nm": 5.430183289959416,
+      "table_force_N": 118.05163295379202
+    }
+  ]
+}
